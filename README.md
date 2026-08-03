@@ -12,6 +12,33 @@ In renote, a user can:
 
 ## Install
 
+Two options are available: a local setup (Herd on Windows/macOS, PHP CLI on Linux) or a Docker setup (recommended if port 80 is already used on your machine, e.g. by Traefik).
+
+### Option A — Docker (recommended)
+
+Requires Docker and Docker Compose v2.
+
+1. Clone this project
+2. Copy `.env.example` to `.env`
+3. Build and start the containers:
+   ```
+   docker compose up -d --build
+   ```
+4. Install PHP dependencies and initialize the app:
+   ```
+   docker compose exec app composer install
+   docker compose exec app php artisan key:generate
+   docker compose exec app touch database/database.sqlite
+   docker compose exec app php artisan migrate
+   ```
+5. Open http://127.0.0.1:8000
+
+The `node` service runs `npm install` then `npm run dev` (Vite on port 5173) automatically.
+
+To stop everything: `docker compose down`.
+
+### Option B — Local install
+
 1. Install Php, Composer and Laravel:
 
    - On Windows or macOS, install Laravel's Herd:

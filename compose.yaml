@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: renote-app
+    container_name: renote-app
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+    environment:
+      APACHE_RUN_USER: "#${UID:-1000}"
+      APACHE_RUN_GROUP: "#${GID:-1000}"
+    working_dir: /var/www/html
+
+  node:
+    image: node:22-alpine
+    container_name: renote-node
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev"
