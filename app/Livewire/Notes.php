@@ -33,7 +33,7 @@ class Notes extends Component
 
     public function refreshTags()
     {
-        $this->tags = \App\Models\Tag::all();
+        $this->tags = Tag::all();
     }
 
     public function save()
