@@ -314,7 +314,7 @@ Auth requise : oui
 }
 ```
 
-**Erreurs** : `401`, `422` — `text` requis, `tag_id` requis/inexistant
+**Erreurs** : `401`, `422` — `text` requis, `tag_id` requis / inexistant / n'appartenant pas à l'utilisateur
 
 ---
 
@@ -332,7 +332,7 @@ Auth requise : oui
 
 ## 5. Tags
 
-⚠️ **Point ouvert** : le schéma actuel de la table `tags` ne porte aucune colonne `user_id` — les tags sont **globaux**, partagés entre tous les utilisateurs. Cette spec respecte ce modèle (endpoints non scopés par utilisateur). Une règle métier envisagée par ailleurs pour la création de note supposait de vérifier que `tag_id` appartient bien à l'utilisateur, ce qui impliquerait de rendre les tags personnels (ajout d'une colonne `user_id`). **Ces deux hypothèses se contredisent** — à trancher avant l'implémentation back : tags globaux (spec ci-dessous, aucun changement de schéma) ou tags par utilisateur (migration + endpoints filtrés, comme pour les notes).
+Les tags sont **personnels** : chaque utilisateur possède ses propres tags. Le schéma initial (`create_tags_table`) ne portait pas de colonne `user_id` ; une migration ajoute `user_id` (FK `onDelete('cascade')`) + un index unique `(user_id, name)`. À la création d'une note, on vérifie que `tag_id` appartient bien à l'utilisateur (sinon `422`). Endpoints ci-dessous scopés par utilisateur, comme pour les notes.
 
 ### `GET /api/tags`
 Auth requise : oui
@@ -363,7 +363,7 @@ Auth requise : oui
 { "status": "success", "message": "Tag créé.", "data": { "id": 3, "name": "courses" } }
 ```
 
-**Erreurs** : `401`, `422` — `name` requis, ≤ 50 caractères, déjà pris (comportement actuel : unicité globale)
+**Erreurs** : `401`, `422` — `name` requis, ≤ 50 caractères, déjà utilisé par ce même utilisateur (unicité `(user_id, name)`)
 
 ---
 

@@ -87,7 +87,7 @@ Contrat imposé : `{status, message, data}` sur toutes les réponses, y compris 
 - **Scoping par utilisateur** : chaque requête sur une ressource (note) est filtrée par l'utilisateur authentifié ; une ressource d'un autre utilisateur répond **404**, jamais 403, pour ne pas révéler son existence.
 - **Validation côté back systématique**, indépendante de celle du front : l'API reste accessible directement (hors interface), le front ne peut donc pas être la seule ligne de défense.
 - **Mots de passe hashés** (`Hash::make`, déjà en place), **email unique**, comportements conservés.
-- ⚠️ **Point ouvert — modèle des tags** : la table `tags` actuelle ne porte pas de colonne `user_id` ; les tags sont **globaux**, partagés entre tous les utilisateurs. Une règle métier envisagée pour la création de note était pourtant de vérifier que le tag appartient bien à l'utilisateur, ce qui supposerait de rendre les tags personnels (migration + colonne `user_id` à ajouter). **Décision à prendre avant l'implémentation** : tags globaux (aucun changement de schéma, spec actuelle) ou tags par utilisateur (migration + filtrage par `user_id` sur `TagController`/`TagService`, comme pour les notes).
+- **Tags personnels** : décision prise de rendre les tags par utilisateur, cohérent avec le scoping déjà appliqué aux notes. Ajout d'une colonne `user_id` sur `tags` (FK `onDelete('cascade')`) + index unique `(user_id, name)` (deux utilisateurs peuvent avoir chacun un tag `courses`). `TagService` filtre par `user_id`, `NoteService::createForUser` vérifie que le `tag_id` appartient bien à l'utilisateur (sinon `422`).
 
 ## 7. Analyse de l'écart (back)
 
@@ -100,7 +100,7 @@ Contrat imposé : `{status, message, data}` sur toutes les réponses, y compris 
 
 **À conserver**
 - Models (`Note`, `Tag`, `User`) et leurs relations Eloquent
-- Migrations existantes (notes, tags, users) — sous réserve de la décision du point ouvert §6
+- Migrations existantes (notes, tags, users), complétées par une nouvelle migration ajoutant `user_id` sur `tags` (cf. §6)
 - Règles de validation métier déjà identifiées (unicité email/tag, complexité mot de passe, rate limiting login/vérification)
 
 **À supprimer**
