@@ -10,13 +10,29 @@ use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * @group User
+ *
+ * Endpoints for managing the authenticated user's own profile and account.
+ */
 class UserController
 {
+    /**
+     * Get current user
+     *
+     * Returns the profile of the authenticated user.
+     */
     public function show(Request $request): JsonResponse
     {
         return ApiResponse::success('Utilisateur courant.', new UserResource($request->user()));
     }
 
+    /**
+     * Update profile
+     *
+     * Updates the user's name and email. Changing the email clears `email_verified_at`
+     * (the new address must be verified again).
+     */
     public function updateProfile(UpdateProfileRequest $request): JsonResponse
     {
         $user = $request->user();
@@ -31,6 +47,11 @@ class UserController
         return ApiResponse::success('Profil mis à jour.', new UserResource($user));
     }
 
+    /**
+     * Update password
+     *
+     * Replaces the password. Requires the current password for confirmation.
+     */
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
         $request->user()->update([
@@ -40,6 +61,12 @@ class UserController
         return ApiResponse::success('Mot de passe mis à jour.');
     }
 
+    /**
+     * Delete account
+     *
+     * Deletes the authenticated user's account, cascades all their notes and tags,
+     * and revokes every issued token. Requires the current password.
+     */
     public function destroy(DeleteAccountRequest $request): JsonResponse
     {
         $user = $request->user();

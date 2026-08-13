@@ -132,11 +132,16 @@ Auth requise : oui
 ### `POST /api/forgot-password`
 Envoie un lien de réinitialisation. Réponse volontairement identique que le compte existe ou non (anti-énumération — comportement actuel conservé).
 
+L'API est consommable par plusieurs clients (web, mobile, tiers). Le client fournit `redirect_url`, l'URL de la page qui gérera le formulaire de réinitialisation. Le back interpole `?token=...&email=...` sur cette URL et l'inclut dans l'email. Pour éviter tout open redirect, l'origine (scheme+host+port) doit figurer dans la whitelist `config('auth.allowed_reset_hosts')` (variable d'env `ALLOWED_RESET_HOSTS`, valeurs séparées par des virgules).
+
 Auth requise : non
 
 **Requête**
 ```json
-{ "email": "ada@example.com" }
+{
+  "email": "ada@example.com",
+  "redirect_url": "https://renote.example.com/reset-password"
+}
 ```
 
 **Réponse 200**
@@ -144,7 +149,7 @@ Auth requise : non
 { "status": "success", "message": "Un lien de réinitialisation sera envoyé si le compte existe.", "data": null }
 ```
 
-**Erreurs** : `422` — email manquant/mal formé
+**Erreurs** : `422` — email manquant/mal formé, `redirect_url` manquant/mal formé, ou origine hors whitelist
 
 ---
 

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Notifications\ResetPasswordNotification;
 use App\Support\AuthResult;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
@@ -65,9 +66,14 @@ class AuthService
         $request->user()->currentAccessToken()->delete();
     }
 
-    public function forgotPassword(string $email): void
+    public function forgotPassword(string $email, string $redirectUrl): void
     {
-        Password::sendResetLink(['email' => $email]);
+        Password::sendResetLink(
+            ['email' => $email],
+            fn (User $user, string $token) => $user->notify(
+                new ResetPasswordNotification($token, $redirectUrl),
+            ),
+        );
     }
 
     public function resetPassword(array $data): void

@@ -18,6 +18,12 @@ return [
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
+    // Origines (scheme://host[:port]) autorisées pour redirect_url de /api/forgot-password.
+    // Sépare plusieurs valeurs par une virgule dans ALLOWED_RESET_HOSTS.
+    'allowed_reset_hosts' => array_filter(
+        array_map('trim', explode(',', (string) env('ALLOWED_RESET_HOSTS', ''))),
+    ),
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards

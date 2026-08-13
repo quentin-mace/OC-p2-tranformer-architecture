@@ -19,7 +19,7 @@ class StoreNoteRequest extends FormRequest
             'tag_id' => [
                 'required',
                 'integer',
-                Rule::exists('tags', 'id')->where('user_id', $this->user()->id),
+                Rule::exists('tags', 'id')->where('user_id', $this->user()?->id),
             ],
         ];
     }

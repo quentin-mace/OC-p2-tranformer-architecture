@@ -37,3 +37,6 @@ jobs:
 
       - name: Run Tests
         run: ./vendor/bin/pest
+
+      - name: Generate API Documentation
+        run: php artisan scribe:generate --no-interaction
