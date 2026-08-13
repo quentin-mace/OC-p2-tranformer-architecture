@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use App\Support\ApiResponse;
+use App\Support\AuthResult;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller
+class AuthController
 {
     public function __construct(private readonly AuthService $authService)
     {
@@ -22,20 +23,14 @@ class AuthController extends Controller
     {
         $result = $this->authService->register($request->validated());
 
-        return ApiResponse::success('Compte créé avec succès.', [
-            'user' => $result['user']->only(['id', 'name', 'email', 'email_verified_at']),
-            'token' => $result['token'],
-        ], 201);
+        return ApiResponse::success('Compte créé avec succès.', $this->authPayload($result), 201);
     }
 
     public function login(LoginRequest $request): JsonResponse
     {
         $result = $this->authService->login($request->validated(), $request);
 
-        return ApiResponse::success('Connexion réussie.', [
-            'user' => $result['user']->only(['id', 'name', 'email', 'email_verified_at']),
-            'token' => $result['token'],
-        ]);
+        return ApiResponse::success('Connexion réussie.', $this->authPayload($result));
     }
 
     public function logout(Request $request): JsonResponse
@@ -71,5 +66,13 @@ class AuthController extends Controller
         $this->authService->verifyEmail($request);
 
         return ApiResponse::success('Adresse email vérifiée.', ['verified' => true]);
+    }
+
+    private function authPayload(AuthResult $result): array
+    {
+        return [
+            'user' => new UserResource($result->user),
+            'token' => $result->token,
+        ];
     }
 }

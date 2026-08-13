@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreNoteRequest extends FormRequest
 {
@@ -15,7 +16,18 @@ class StoreNoteRequest extends FormRequest
     {
         return [
             'text' => ['required', 'string'],
-            'tag_id' => ['required', 'integer', 'exists:tags,id'],
+            'tag_id' => [
+                'required',
+                'integer',
+                Rule::exists('tags', 'id')->where('user_id', $this->user()->id),
+            ],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'tag_id.exists' => 'Ce tag est introuvable.',
         ];
     }
 }

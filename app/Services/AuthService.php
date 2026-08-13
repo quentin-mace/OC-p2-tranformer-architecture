@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Support\AuthResult;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
-    public function register(array $data): array
+    public function register(array $data): AuthResult
     {
         $user = User::create([
             'name' => $data['name'],
@@ -25,13 +26,13 @@ class AuthService
 
         event(new Registered($user));
 
-        return [
-            'user' => $user,
-            'token' => $user->createToken('api')->plainTextToken,
-        ];
+        return new AuthResult(
+            user: $user,
+            token: $user->createToken('api')->plainTextToken,
+        );
     }
 
-    public function login(array $credentials, Request $request): array
+    public function login(array $credentials, Request $request): AuthResult
     {
         $key = Str::lower($credentials['email']).'|'.$request->ip();
 
@@ -53,10 +54,10 @@ class AuthService
 
         $user = Auth::user();
 
-        return [
-            'user' => $user,
-            'token' => $user->createToken('api')->plainTextToken,
-        ];
+        return new AuthResult(
+            user: $user,
+            token: $user->createToken('api')->plainTextToken,
+        );
     }
 
     public function logout(Request $request): void

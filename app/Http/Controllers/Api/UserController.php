@@ -2,49 +2,49 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\User\DeleteAccountRequest;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateProfileRequest;
-use App\Services\UserService;
+use App\Http\Resources\UserResource;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserController
 {
-    public function __construct(private readonly UserService $userService)
-    {
-    }
-
     public function show(Request $request): JsonResponse
     {
-        return ApiResponse::success(
-            'Utilisateur courant.',
-            $request->user()->only(['id', 'name', 'email', 'email_verified_at']),
-        );
+        return ApiResponse::success('Utilisateur courant.', new UserResource($request->user()));
     }
 
     public function updateProfile(UpdateProfileRequest $request): JsonResponse
     {
-        $user = $this->userService->updateProfile($request->user(), $request->validated());
+        $user = $request->user();
+        $data = $request->validated();
 
-        return ApiResponse::success(
-            'Profil mis à jour.',
-            $user->only(['id', 'name', 'email', 'email_verified_at']),
-        );
+        if ($user->email !== $data['email']) {
+            $user->email_verified_at = null;
+        }
+
+        $user->fill($data)->save();
+
+        return ApiResponse::success('Profil mis à jour.', new UserResource($user));
     }
 
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
-        $this->userService->updatePassword($request->user(), $request->validated()['password']);
+        $request->user()->update([
+            'password' => $request->validated()['password'],
+        ]);
 
         return ApiResponse::success('Mot de passe mis à jour.');
     }
 
     public function destroy(DeleteAccountRequest $request): JsonResponse
     {
-        $this->userService->deleteAccount($request->user());
+        $user = $request->user();
+        $user->tokens()->delete();
+        $user->delete();
 
         return ApiResponse::success('Compte supprimé.');
     }

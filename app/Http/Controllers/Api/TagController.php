@@ -2,33 +2,25 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTagRequest;
-use App\Models\Tag;
-use App\Services\TagService;
+use App\Http\Resources\TagResource;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class TagController
 {
-    public function __construct(private readonly TagService $tagService)
-    {
-    }
-
     public function index(Request $request): JsonResponse
     {
-        $tags = $this->tagService->listForUser($request->user());
+        $tags = $request->user()->tags()->orderBy('name')->get();
 
-        $data = $tags->map(fn (Tag $tag) => $tag->only(['id', 'name']));
-
-        return ApiResponse::success('Liste des tags.', $data);
+        return ApiResponse::success('Liste des tags.', TagResource::collection($tags));
     }
 
     public function store(StoreTagRequest $request): JsonResponse
     {
-        $tag = $this->tagService->createForUser($request->user(), $request->validated());
+        $tag = $request->user()->tags()->create($request->validated());
 
-        return ApiResponse::success('Tag créé.', $tag->only(['id', 'name']), 201);
+        return ApiResponse::success('Tag créé.', new TagResource($tag), 201);
     }
 }
