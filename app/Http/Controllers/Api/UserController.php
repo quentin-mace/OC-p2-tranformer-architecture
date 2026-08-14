@@ -24,7 +24,7 @@ class UserController
      */
     public function show(Request $request): JsonResponse
     {
-        return ApiResponse::success('Utilisateur courant.', new UserResource($request->user()));
+        return ApiResponse::success('Current user.', new UserResource($request->user()));
     }
 
     /**
@@ -44,7 +44,7 @@ class UserController
 
         $user->fill($data)->save();
 
-        return ApiResponse::success('Profil mis à jour.', new UserResource($user));
+        return ApiResponse::success('Profile updated.', new UserResource($user));
     }
 
     /**
@@ -58,7 +58,7 @@ class UserController
             'password' => $request->validated()['password'],
         ]);
 
-        return ApiResponse::success('Mot de passe mis à jour.');
+        return ApiResponse::success('Password updated.');
     }
 
     /**
@@ -73,6 +73,6 @@ class UserController
         $user->tokens()->delete();
         $user->delete();
 
-        return ApiResponse::success('Compte supprimé.');
+        return ApiResponse::success('Account deleted.');
     }
 }

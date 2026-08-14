@@ -35,7 +35,7 @@ class AuthController
     {
         $result = $this->authService->register($request->validated());
 
-        return ApiResponse::success('Compte créé avec succès.', $this->authPayload($result), 201);
+        return ApiResponse::success('Account created successfully.', $this->authPayload($result), 201);
     }
 
     /**
@@ -50,7 +50,7 @@ class AuthController
     {
         $result = $this->authService->login($request->validated(), $request);
 
-        return ApiResponse::success('Connexion réussie.', $this->authPayload($result));
+        return ApiResponse::success('Login successful.', $this->authPayload($result));
     }
 
     /**
@@ -62,7 +62,7 @@ class AuthController
     {
         $this->authService->logout($request);
 
-        return ApiResponse::success('Déconnexion réussie.');
+        return ApiResponse::success('Logout successful.');
     }
 
     /**
@@ -82,7 +82,7 @@ class AuthController
         $data = $request->validated();
         $this->authService->forgotPassword($data['email'], $data['redirect_url']);
 
-        return ApiResponse::success('Un lien de réinitialisation sera envoyé si le compte existe.');
+        return ApiResponse::success('A reset link will be sent if the account exists.');
     }
 
     /**
@@ -97,7 +97,7 @@ class AuthController
     {
         $this->authService->resetPassword($request->validated());
 
-        return ApiResponse::success('Mot de passe réinitialisé avec succès.');
+        return ApiResponse::success('Password reset successfully.');
     }
 
     /**
@@ -110,7 +110,7 @@ class AuthController
     {
         $this->authService->sendVerificationEmail($request);
 
-        return ApiResponse::success('Un nouveau lien de vérification a été envoyé.');
+        return ApiResponse::success('A new verification link has been sent.');
     }
 
     /**
@@ -128,7 +128,7 @@ class AuthController
     {
         $this->authService->verifyEmail($request);
 
-        return ApiResponse::success('Adresse email vérifiée.', ['verified' => true]);
+        return ApiResponse::success('Email address verified.', ['verified' => true]);
     }
 
     private function authPayload(AuthResult $result): array

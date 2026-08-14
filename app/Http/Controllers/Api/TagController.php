@@ -25,7 +25,7 @@ class TagController
     {
         $tags = $request->user()->tags()->orderBy('name')->get();
 
-        return ApiResponse::success('Liste des tags.', TagResource::collection($tags));
+        return ApiResponse::success('List of tags.', TagResource::collection($tags));
     }
 
     /**
@@ -38,6 +38,6 @@ class TagController
     {
         $tag = $request->user()->tags()->create($request->validated());
 
-        return ApiResponse::success('Tag créé.', new TagResource($tag), 201);
+        return ApiResponse::success('Tag created.', new TagResource($tag), 201);
     }
 }

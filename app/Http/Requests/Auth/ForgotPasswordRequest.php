@@ -29,7 +29,7 @@ class ForgotPasswordRequest extends FormRequest
             {
                 $parts = parse_url($value);
                 if ($parts === false || empty($parts['scheme']) || empty($parts['host'])) {
-                    $fail('URL de redirection invalide.');
+                    $fail('Invalid redirect URL.');
 
                     return;
                 }
@@ -41,7 +41,7 @@ class ForgotPasswordRequest extends FormRequest
 
                 $allowed = config('auth.allowed_reset_hosts', []);
                 if (! in_array($origin, $allowed, true)) {
-                    $fail('URL de redirection non autorisée.');
+                    $fail('Unauthorized redirect URL.');
                 }
             }
         };

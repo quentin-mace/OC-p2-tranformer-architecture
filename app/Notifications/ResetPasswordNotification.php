@@ -33,10 +33,10 @@ class ResetPasswordNotification extends Notification
         );
 
         return (new MailMessage)
-            ->subject('Réinitialisation de votre mot de passe')
-            ->line('Vous recevez cet email car nous avons reçu une demande de réinitialisation de mot de passe.')
-            ->action('Réinitialiser le mot de passe', $url)
-            ->line('Ce lien expirera dans 60 minutes.')
-            ->line('Si vous n\'êtes pas à l\'origine de cette demande, ignorez cet email.');
+            ->subject('Reset Your Password')
+            ->line('You are receiving this email because we received a password reset request for your account.')
+            ->action('Reset Password', $url)
+            ->line('This link will expire in 60 minutes.')
+            ->line('If you did not request a password reset, no further action is required.');
     }
 }

@@ -108,7 +108,7 @@ class AuthService
 
         if (! hash_equals(sha1($user->getEmailForVerification()), (string) $request->route('hash'))) {
             throw ValidationException::withMessages([
-                'hash' => 'Lien de vérification invalide.',
+                'hash' => 'Invalid verification link.',
             ])->status(401);
         }
 

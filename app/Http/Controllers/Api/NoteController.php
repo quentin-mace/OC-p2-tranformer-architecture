@@ -29,7 +29,7 @@ class NoteController
             ->orderByDesc('created_at')
             ->get();
 
-        return ApiResponse::success('Liste des notes.', NoteResource::collection($notes));
+        return ApiResponse::success('List of notes.', NoteResource::collection($notes));
     }
 
     /**
@@ -42,7 +42,7 @@ class NoteController
     {
         $note = $request->user()->notes()->create($request->validated());
 
-        return ApiResponse::success('Note créée.', new NoteResource($note), 201);
+        return ApiResponse::success('Note created.', new NoteResource($note), 201);
     }
 
     /**
@@ -57,6 +57,6 @@ class NoteController
     {
         $note->delete();
 
-        return ApiResponse::success('Note supprimée.');
+        return ApiResponse::success('Note deleted.');
     }
 }

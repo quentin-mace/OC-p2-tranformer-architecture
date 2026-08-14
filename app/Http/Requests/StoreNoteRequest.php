@@ -27,7 +27,7 @@ class StoreNoteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'tag_id.exists' => 'Ce tag est introuvable.',
+            'tag_id.exists' => 'This tag could not be found.',
         ];
     }
 }
