@@ -59,7 +59,7 @@ it('creates a note and returns it with tag_id (not tag object)', function () {
 
     $response->assertStatus(201)
         ->assertJsonPath('status', 'success')
-        ->assertJsonPath('message', 'Note créée.')
+        ->assertJsonPath('message', 'Note created.')
         ->assertJsonPath('data.text', 'Acheter du café')
         ->assertJsonPath('data.tag_id', $tag->id)
         ->assertJsonMissingPath('data.tag');
@@ -111,7 +111,7 @@ it('deletes an owned note', function () {
 
     $this->deleteJson("/api/notes/{$note->id}")
         ->assertOk()
-        ->assertJsonPath('message', 'Note supprimée.');
+        ->assertJsonPath('message', 'Note deleted.');
 
     expect(Note::find($note->id))->toBeNull();
 });

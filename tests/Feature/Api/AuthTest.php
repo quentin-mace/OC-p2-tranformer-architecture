@@ -20,7 +20,7 @@ it('registers a user and returns a token', function () {
 
     $response->assertStatus(201)
         ->assertJsonPath('status', 'success')
-        ->assertJsonPath('message', 'Compte créé avec succès.')
+        ->assertJsonPath('message', 'Account created successfully.')
         ->assertJsonPath('data.user.name', 'Ada Lovelace')
         ->assertJsonPath('data.user.email', 'ada@example.com')
         ->assertJsonPath('data.user.email_verified_at', null)
@@ -106,7 +106,7 @@ it('logs out and revokes the current token', function () {
 
     $this->postJson('/api/logout')
         ->assertOk()
-        ->assertJsonPath('message', 'Déconnexion réussie.');
+        ->assertJsonPath('message', 'Logout successful.');
 });
 
 it('sends the same forgot-password response whether the email exists or not', function () {
@@ -162,7 +162,7 @@ it('sends the reset link with a token and resets the password end-to-end', funct
         'email' => $user->email,
         'password' => 'new-strong-password',
         'password_confirmation' => 'new-strong-password',
-    ])->assertOk()->assertJsonPath('message', 'Mot de passe réinitialisé avec succès.');
+    ])->assertOk()->assertJsonPath('message', 'Password reset successfully.');
 
     expect(auth()->attempt(['email' => $user->email, 'password' => 'new-strong-password']))->toBeTrue();
 });

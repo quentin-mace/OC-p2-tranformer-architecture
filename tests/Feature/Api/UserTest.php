@@ -94,7 +94,7 @@ it('deletes the account and revokes all tokens', function () {
 
     $this->deleteJson('/api/user', ['password' => 'password'])
         ->assertOk()
-        ->assertJsonPath('message', 'Compte supprimé.');
+        ->assertJsonPath('message', 'Account deleted.');
 
     expect(User::find($user->id))->toBeNull();
 });
