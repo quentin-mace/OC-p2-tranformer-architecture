@@ -1,76 +1,73 @@
 # Transformez l'architecture d'une application existante
 
-# Plot
+# Renote
 
-Renote is an application that allows user to take and store notes.
-In renote, a user can:
-- create notes
-- visualize notes
-- define relationship between the notes
-- define tags
-- and associate a tag to a note.
+Renote est une API permettant de prendre et stocker des notes. Un utilisateur peut :
+- créer des notes
+- consulter ses notes
+- définir des tags
+- associer un tag à une note
 
-## Install
+Ce dépôt contient uniquement le backend (API REST Laravel + Sanctum). Il n'y a pas d'interface web : l'application est consommée par un client externe (front React) via les endpoints `/api/*`.
 
-Two options are available: a local setup (Herd on Windows/macOS, PHP CLI on Linux) or a Docker setup (recommended if port 80 is already used on your machine, e.g. by Traefik).
+## Installer
 
-### Option A — Docker (recommended)
+Deux options : un setup local (PHP CLI) ou Docker (recommandé si le port 80 est déjà utilisé, par exemple par Traefik).
 
-Requires Docker and Docker Compose v2.
+### Option A — Docker (recommandé)
 
-1. Clone this project
-2. Copy `.env.example` to `.env`
-3. Build and start the containers:
+Nécessite Docker et Docker Compose v2.
+
+1. Cloner ce projet
+2. Copier `.env.example` en `.env`
+3. Build et démarrer les conteneurs :
    ```
    docker compose up -d --build
    ```
-4. Install PHP dependencies and initialize the app:
+4. Installer les dépendances PHP et initialiser l'app :
    ```
    docker compose exec app composer install
    docker compose exec app php artisan key:generate
    docker compose exec app touch database/database.sqlite
    docker compose exec app php artisan migrate
    ```
-5. Open http://127.0.0.1:8000
+5. L'API est disponible sur http://127.0.0.1:8000/api
 
-The `node` service runs `npm install` then `npm run dev` (Vite on port 5173) automatically.
+Pour tout arrêter : `docker compose down`.
 
-To stop everything: `docker compose down`.
+### Option B — Local
 
-### Option B — Local install
+1. Installer PHP 8.4+, les extensions requises et Composer :
+   ```
+   sudo apt install php php-cli php-mbstring php-xml php-curl php-sqlite3 unzip
+   ```
+   Composer : https://getcomposer.org/download/
+2. Cloner ce projet
+3. Copier `.env.example` en `.env`
+4. Installer les dépendances : `composer install`
+5. Générer la clé d'application : `php artisan key:generate`
+6. Créer la base SQLite et migrer :
+   ```
+   touch database/database.sqlite
+   php artisan migrate
+   ```
+7. Démarrer le serveur : `php artisan serve`
+8. L'API est disponible sur http://127.0.0.1:8000/api
 
-1. Install Php, Composer and Laravel:
+## Tester
 
-   - On Windows or macOS, install Laravel's Herd:
-   https://laravel.com/docs/12.x/installation#installation-using-herd
+```
+composer test
+```
+ou directement :
+```
+php artisan test
+```
 
-   - On Linux, Herd is not available. Install manually instead:
-     - Php and required extensions, e.g. on Ubuntu/Debian:
-       ```
-       sudo apt install php php-cli php-mbstring php-xml php-curl php-sqlite3 php-mysql unzip
-       ```
-     - Composer: https://getcomposer.org/download/
-     - Optionally, [Valet Linux](https://cpriego.github.io/valet-linux/) can reproduce Herd/Valet's experience (`.test` domains, no port to manage).
+## Documentation de l'API
 
-2. Install node v22
-
-Install node version manager (MVN).
-On Windows you can use this distribution:
-https://github.com/coreybutler/nvm-windows#readme
-
-
-3. Clone this project
-
-4. Copy `.env.example` to `.env`
-
-5. Generate new APP_KEY with `php artisan key:generate`
-
-6. Run `npm i` and `npm run dev`
-
-7. Run `php artisan migrate`
-
-8. Start Herd (Windows/macOS), or on Linux run `php artisan serve`
-
-9. Access to Herd link from your browser (Windows/macOS), or `http://127.0.0.1:8000` on Linux
-
-You are setup!
+La documentation des endpoints est générée avec Scribe :
+```
+php artisan scribe:generate
+```
+Elle est ensuite consultable sur `/docs`.
