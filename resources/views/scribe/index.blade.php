@@ -151,7 +151,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: August 13, 2026</li>
+        <li>Last updated: August 14, 2026</li>
     </ul>
 </div>
 
@@ -350,7 +350,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"b\",
     \"email\": \"zbailey@example.net\",
-    \"password\": \"architecto\"
+    \"password\": \"architecto\",
+    \"password_confirmation\": \"Str0ngP@ssw0rd!\"
 }"
 </code></pre></div>
 
@@ -368,7 +369,8 @@ const headers = {
 let body = {
     "name": "b",
     "email": "zbailey@example.net",
-    "password": "architecto"
+    "password": "architecto",
+    "password_confirmation": "Str0ngP@ssw0rd!"
 };
 
 fetch(url, {
@@ -488,6 +490,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password_confirmation"                data-endpoint="POSTapi-register"
+               value="Str0ngP@ssw0rd!"
+               data-component="body">
+    <br>
+<p>Must match <code>password</code>. Example: <code>Str0ngP@ssw0rd!</code></p>
         </div>
         </form>
 
@@ -808,7 +822,8 @@ for the user are revoked on success.</p>
     --data "{
     \"token\": \"architecto\",
     \"email\": \"zbailey@example.net\",
-    \"password\": \"architecto\"
+    \"password\": \"architecto\",
+    \"password_confirmation\": \"Str0ngP@ssw0rd!\"
 }"
 </code></pre></div>
 
@@ -826,7 +841,8 @@ const headers = {
 let body = {
     "token": "architecto",
     "email": "zbailey@example.net",
-    "password": "architecto"
+    "password": "architecto",
+    "password_confirmation": "Str0ngP@ssw0rd!"
 };
 
 fetch(url, {
@@ -946,6 +962,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password_confirmation"                data-endpoint="POSTapi-reset-password"
+               value="Str0ngP@ssw0rd!"
+               data-component="body">
+    <br>
+<p>Must match <code>password</code>. Example: <code>Str0ngP@ssw0rd!</code></p>
         </div>
         </form>
 
@@ -1528,7 +1556,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/notes/2" \
+    "http://localhost/api/notes/12" \
     --header "Authorization: Bearer {YOUR_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1536,7 +1564,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/notes/2"
+    "http://localhost/api/notes/12"
 );
 
 const headers = {
@@ -1646,18 +1674,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-notes--id-"
-               value="2"
-               data-component="url">
-    <br>
-<p>The ID of the note. Example: <code>2</code></p>
-            </div>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>note</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="note"                data-endpoint="DELETEapi-notes--id-"
                value="12"
                data-component="url">
     <br>
@@ -2292,7 +2308,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"current_password\": \"architecto\",
-    \"password\": \"architecto\"
+    \"password\": \"architecto\",
+    \"password_confirmation\": \"Str0ngP@ssw0rd!\"
 }"
 </code></pre></div>
 
@@ -2310,7 +2327,8 @@ const headers = {
 
 let body = {
     "current_password": "architecto",
-    "password": "architecto"
+    "password": "architecto",
+    "password_confirmation": "Str0ngP@ssw0rd!"
 };
 
 fetch(url, {
@@ -2430,6 +2448,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password_confirmation"                data-endpoint="PUTapi-user-password"
+               value="Str0ngP@ssw0rd!"
+               data-component="body">
+    <br>
+<p>Must match <code>password</code>. Example: <code>Str0ngP@ssw0rd!</code></p>
         </div>
         </form>
 

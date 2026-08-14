@@ -51,6 +51,8 @@ class UserController
      * Update password
      *
      * Replaces the password. Requires the current password for confirmation.
+     *
+     * @bodyParam password_confirmation string required Must match `password`. Example: Str0ngP@ssw0rd!
      */
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {

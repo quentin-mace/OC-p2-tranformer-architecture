@@ -143,17 +143,6 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the note.'
-        required: true
-        example: 2
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      note:
-        custom: []
-        name: note
         description: 'The note ID.'
         required: true
         example: 12
@@ -163,8 +152,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 2
-      note: 12
+      id: 12
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

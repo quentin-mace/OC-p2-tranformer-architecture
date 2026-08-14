@@ -30,6 +30,8 @@ class AuthController
      * Creates an account, issues a bearer token, and triggers the email verification flow.
      *
      * @unauthenticated
+     *
+     * @bodyParam password_confirmation string required Must match `password`. Example: Str0ngP@ssw0rd!
      */
     public function register(RegisterRequest $request): JsonResponse
     {
@@ -92,6 +94,8 @@ class AuthController
      * for the user are revoked on success.
      *
      * @unauthenticated
+     *
+     * @bodyParam password_confirmation string required Must match `password`. Example: Str0ngP@ssw0rd!
      */
     public function resetPassword(ResetPasswordRequest $request): JsonResponse
     {

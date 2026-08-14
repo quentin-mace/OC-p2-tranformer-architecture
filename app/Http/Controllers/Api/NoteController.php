@@ -51,7 +51,7 @@ class NoteController
      * A 404 is returned if the note does not exist or does not belong to the authenticated user
      * (the API never confirms the existence of another user's resources).
      *
-     * @urlParam note integer required The note ID. Example: 12
+     * @urlParam id integer required The note ID. Example: 12
      */
     public function destroy(Note $note): JsonResponse
     {
