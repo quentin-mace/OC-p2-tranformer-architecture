@@ -1,5 +1,7 @@
 # Spécification de l'API REST — Renote
 
+> **Branche `feat/implement-routing`** : version finale de cette spec, celle effectivement implémentée et consommée par le front (`oc_p3_frontend`). La branche `main` conserve une version antérieure, à titre de référence de l'ancienne version.
+
 Alimente la section **Architecture cible > API REST** du modèle de documentation (contrat d'échange entre le front React et le back Laravel, réutilisable par un futur client mobile).
 
 Périmètre : cette spec couvre exactement les fonctionnalités déjà présentes dans l'application (cf. `architecture-analyse.md`), ni plus ni moins — pas d'endpoints "au cas où" (pas d'édition de note/tag, pas de suppression de tag : ces actions n'existent pas dans l'UI actuelle).
