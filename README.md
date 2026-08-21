@@ -2,13 +2,17 @@
 
 # Renote
 
-Renote est une API permettant de prendre et stocker des notes. Un utilisateur peut :
-- créer des notes
-- consulter ses notes
-- définir des tags
-- associer un tag à une note
+> **Branche `feat/implement-routing`** : version finale et à jour de l'API. La branche `main` est conservée pour référence de l'ancienne version (monolithe Blade/Livewire), ne pas l'utiliser pour développer.
 
-Ce dépôt contient uniquement le backend (API REST Laravel + Sanctum). Il n'y a pas d'interface web : l'application est consommée par un client externe (front React) via les endpoints `/api/*`.
+Renote est une API permettant de prendre et stocker des notes. Un utilisateur peut :
+- créer un compte, se connecter, se déconnecter
+- créer des tags
+- créer des notes et leur associer un tag
+- consulter et supprimer ses notes
+
+Ce dépôt contient uniquement le backend (API REST Laravel + Sanctum). Il n'y a pas d'interface web : l'application est consommée par le front React, dépôt [`oc_p3_frontend`](https://github.com/quentin-mace/oc_p3_frontend).
+
+Contrat d'API détaillé : [`docs/specs/api-specs.md`](docs/specs/api-specs.md). Architecture cible du front : [`docs/specs/front-specs.md`](docs/specs/front-specs.md) (note, le front livré a un périmètre réduit par rapport à cette cible, pas de gestion de profil ni de mot de passe oublié, voir le README du dépôt front).
 
 ## Installer
 
