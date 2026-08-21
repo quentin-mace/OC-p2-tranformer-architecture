@@ -1,5 +1,7 @@
 # Transformez l'architecture d'une application existante
 
+> **Cette branche (`main`) est une version antérieure, conservée pour référence (ancien monolithe Blade/Livewire).** La version finale à jour, l'API Laravel consommée par le front React, est sur la branche `feat/implement-routing`.
+
 # Plot
 
 Renote is an application that allows user to take and store notes.
